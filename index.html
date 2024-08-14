@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliment Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet"> <!-- Import Montserrat font -->
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #b3d9ff; /* Light pastel blue background */
+            background-image: url('https://www.transparenttextures.com/patterns/tiny-grid.png'); /* Patterned background */
+            margin: 0;
+            overflow: hidden; /* Hide overflow for confetti */
+            transition: background-color 0.3s ease; /* Smooth background color change */
+        }
+
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            width: 600px; /* Larger box */
+            max-width: 90%;
+        }
+
+        h1 {
+            color: #333333;
+            font-size: 36px; /* Larger font size */
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50; /* Light green button */
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            font-family: 'Montserrat', sans-serif; /* Apply Montserrat font */
+        }
+
+        button:hover {
+            background-color: #388E3C;
+        }
+
+        #complimentText {
+            margin-top: 30px;
+            font-size: 26px; /* Larger text for compliments */
+            color: #555555;
+            text-align: center; /* Centered text */
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #FFC107;
+            opacity: 0.7;
+            will-change: transform, opacity;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%) rotate(0); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get a Compliment!</h1>
+        <button id="complimentButton">Click Me</button>
+        <p id="complimentText"></p>
+    </div>
+    
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        const compliments = [
+            "You have a great sense of humor!",
+            "You're an awesome friend.",
+            "You light up the room.",
+            "You're a smart cookie!",
+            "You are amazing just the way you are.",
+            "You bring out the best in others.",
+            "You're a great listener.",
+            "You have impeccable manners.",
+            "You're so thoughtful.",
+            "You're making a difference."
+        ];
+
+        const colors = ["#FFC107", "#FF5722", "#4CAF50", "#2196F3", "#9C27B0", "#FFEB3B", "#00BCD4"]; // Multicolored confetti
+        const backgrounds = ["#FFC1E3", "#C1DFFC", "#C1FCCC", "#FCE4C1", "#F8C1FC"]; // Background colors
+
+        document.getElementById('complimentButton').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * compliments.length);
+            document.getElementById('complimentText').innerText = compliments[randomIndex];
+            throwConfetti();
+            changeBackground();
+        });
+
+        function throwConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            confettiContainer.innerHTML = ''; // Clear previous confetti
+
+            for (let i = 0; i < 100; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.classList.add('confetti-piece');
+                confettiPiece.style.left = Math.random() * 100 + 'vw';
+                confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; // Random confetti color
+                confettiPiece.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                confettiContainer.appendChild(confettiPiece);
+            }
+
+            setTimeout(() => confettiContainer.innerHTML = '', 10000); // Clear confetti after 5 seconds
+        }
+
+        function changeBackground() {
+            const randomBackgroundIndex = Math.floor(Math.random() * backgrounds.length);
+            document.body.style.backgroundColor = backgrounds[randomBackgroundIndex];
+        }
+    </script>
+</body>
+</html>
